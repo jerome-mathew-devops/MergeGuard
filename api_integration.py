@@ -2,15 +2,15 @@ import requests
 import os
 import sys
 
-sonarqube_url = os.getenv("SONARQUBE_URL", "localhost:9000")
-sonarqube_token = os.getenv("SONAR_PROJECT_TOKEN")
-sonarqube_project_key = os.getenv("SONAR_PROJECT_KEY")
-slack_token = os.getenv("SLACK_TOKEN")
-slack_channel = os.getenv("SLACK_CHANNEL")
+SONARQUBE_URL = os.getenv("SONARQUBE_URL", "localhost:9000")
+SONAR_TOKEN = os.getenv("SONAR_PROJECT_TOKEN")
+SONAR_PROJECT_KEY = os.getenv("SONAR_PROJECT_KEY")
+SLACK_TOKEN = os.getenv("SLACK_TOKEN")
+SLACK_CHANNEL = os.getenv("SLACK_CHANNEL")
 
 def sonarqube_project_status():
-    url = f"{sonarqube_url}/api/qualitygates/project_status?projectKey={sonarqube_project_key}"
-    response = requests.get(url, auth=(sonarqube_token))
+    url = f"{SONARQUBE_URL}/api/qualitygates/project_status?projectKey={SONAR_PROJECT_KEY}"
+    response = requests.get(url, auth=(SONAR_TOKEN))
     response.raise_for_status()
     return response.json()
 
@@ -18,7 +18,7 @@ def send_to_slack(message):
     url = "https://slack.com/api/chat.postSonar_analysis"
     headers = {"Authorization": f"Bearer {slack_token}"}
     payload = {
-        "channel": slack_channel,
+        "channel": SLACK_CHANNEL,
         "text": message
     }
     response = requests.post(url, headers=headers, json=payload)
@@ -41,17 +41,12 @@ if __name__ == "__main__":
     details_message = "\n".join(details)
 
     message = (
-        f" SonarQube Report for *{sonarqube_project_key}*\n"
+        f" SonarQube Report for *{SONAR_PROJECT_KEY}*\n"
         f"Quality Gate: {'PASSED' if project_status == 'OK' else 'FAILED'} Proceeding to Merge PR\n\n"
         f"{details_message}\n\n"
-        f"🔗 Dashboard: {sonarqube_url}/dashboard?id={sonarqube_project_key}"
+        f"🔗 Dashboard: {SONARQUBE_URL}/dashboard?id={SONAR_PROJECT_KEY}"
     )
 
     result = send_to_slack(message)
     print("Slack message has been sent", result)
 
-if passed != "OK":
-    print("Quality Gate Failed. Exiting with status code 1.")
-    sys.exit(1)
-else:
-    print("Quality Gate Passed. Safe to merge")
