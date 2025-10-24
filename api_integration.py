@@ -16,7 +16,7 @@ def sonarqube_project_status():
 
 def send_to_slack(message):
     url = "https://slack.com/api/chat.postSonar_analysis"
-    headers = {"Authorization": f"Bearer {slack_token}"}
+    headers = {"Authorization": f"Bearer {SLACK_TOKEN}"}
     payload = {
         "channel": SLACK_CHANNEL,
         "text": message
