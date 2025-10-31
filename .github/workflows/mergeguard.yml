@@ -9,13 +9,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Code Checkout
+      - uses: actions/checkout@v5
+
+      - name: SonarScanner setup
+      - uses: Warchant/setup-sonar-scanner@v8
 
       - name: Run SonarQube Analysis
+        run: |
+          sonar-scanner \  
+              -Dsonar.projectKey=${{ secrets.SONARQUBE_PROJECT_KEY }}
+              -Dsonar.host.url=${{ secrets.SONARQUBE_URL }}
+              -Dsonar.login=${{ secrets.SONARQUBE_TOKEN }}
+
+      - name: Send Sonar Aanalysis to Slack
         env:
           SONARQUBE_URL: ${{ secrets.SONARQUBE_URL }}
           SONARQUBE_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
           SONARQUBE_PROJECT_KEY: ${{ secrets.SONARQUBE_PROJECT_KEY }}
           SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
           SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
-        run: python3 api_integration.py
+          run: python3 api_integration.py
