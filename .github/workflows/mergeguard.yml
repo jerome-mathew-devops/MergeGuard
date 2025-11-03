@@ -10,10 +10,10 @@ jobs:
 
     steps:
       - name: Code Checkout
-      - uses: actions/checkout@v5
+         uses: actions/checkout@v5
 
       - name: SonarScanner setup
-      - uses: Warchant/setup-sonar-scanner@v8
+        uses: Warchant/setup-sonar-scanner@v8
 
       - name: Run SonarQube Analysis
         run: |
@@ -29,4 +29,4 @@ jobs:
           SONARQUBE_PROJECT_KEY: ${{ secrets.SONARQUBE_PROJECT_KEY }}
           SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
           SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
-          run: python3 api_integration.py
+        run: python3 api_integration.py
