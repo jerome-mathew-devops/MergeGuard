@@ -15,9 +15,11 @@ jobs:
       - name: SonarScanner setup
         uses: Warchant/setup-sonar-scanner@v8
 
+      - name: Clean Sonar cache
+        run: rm -rf ~/.sonar/cache
+
       - name: Run SonarQube Analysis
         run: |
-          rm -rf ~/.sonar/cache \
           sonar-scanner \
             -Dsonar.projectKey=${{ secrets.SONARQUBE_PROJECT_KEY }} \
             -Dsonar.host.url=${{ secrets.SONARQUBE_URL }} \
