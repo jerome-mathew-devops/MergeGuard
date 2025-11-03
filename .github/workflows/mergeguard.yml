@@ -17,6 +17,7 @@ jobs:
 
       - name: Run SonarQube Analysis
         run: |
+          rm -rf ~/.sonar/cache \
           sonar-scanner \
             -Dsonar.projectKey=${{ secrets.SONARQUBE_PROJECT_KEY }} \
             -Dsonar.host.url=${{ secrets.SONARQUBE_URL }} \
