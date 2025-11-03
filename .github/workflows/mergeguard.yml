@@ -10,19 +10,19 @@ jobs:
 
     steps:
       - name: Code Checkout
-         uses: actions/checkout@v5
+        uses: actions/checkout@v5
 
       - name: SonarScanner setup
         uses: Warchant/setup-sonar-scanner@v8
 
       - name: Run SonarQube Analysis
         run: |
-          sonar-scanner \  
-              -Dsonar.projectKey=${{ secrets.SONARQUBE_PROJECT_KEY }}
-              -Dsonar.host.url=${{ secrets.SONARQUBE_URL }}
-              -Dsonar.login=${{ secrets.SONARQUBE_TOKEN }}
+          sonar-scanner \
+            -Dsonar.projectKey=${{ secrets.SONARQUBE_PROJECT_KEY }} \
+            -Dsonar.host.url=${{ secrets.SONARQUBE_URL }} \
+            -Dsonar.login=${{ secrets.SONARQUBE_TOKEN }}
 
-      - name: Send Sonar Aanalysis to Slack
+      - name: Send Sonar Analysis to Slack
         env:
           SONARQUBE_URL: ${{ secrets.SONARQUBE_URL }}
           SONARQUBE_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
