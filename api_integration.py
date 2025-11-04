@@ -9,7 +9,7 @@ SLACK_TOKEN = os.getenv("SLACK_TOKEN")
 SLACK_CHANNEL = os.getenv("SLACK_CHANNEL")
 
 def sonarqube_project_status():
-    url = f"{SONARQUBE_URL}/api/qualitygates/project_status?projectKey={SONAR_PROJECT_KEY}"
+    url = f"{SONARQUBE_URL}/api/quality_gates/project_status?projectKey={SONAR_PROJECT_KEY}"
     response = requests.get(url, auth=(SONAR_TOKEN))
     response.raise_for_status()
     return response.json()
