@@ -13,8 +13,8 @@ jobs:
         uses: actions/checkout@v5
 
       - name: SonarScanner setup
-        uses: Warchant/setup-sonar-scanner@v8
-
+        uses: SonarSource/sonarqube-scan-action@v3
+        
       - name: Run SonarQube Analysis
         run: |
           sonar-scanner \
