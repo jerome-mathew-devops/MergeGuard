@@ -50,3 +50,5 @@ if __name__ == "__main__":
     result = send_to_slack(message)
     print("Slack message has been sent", result)
 
+if project_status != "OK":
+    sys.exit(1)
