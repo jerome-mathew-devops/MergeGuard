@@ -21,12 +21,12 @@ jobs:
             -Dsonar.projectKey=${{ secrets.SONARQUBE_PROJECT_KEY }} \
             -Dsonar.sources=src \
             -Dsonar.host.url=${{ secrets.SONARQUBE_URL }} \
-            -Dsonar.login=${{ secrets.SONARQUBE_TOKEN }}
+            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
 
       - name: Send Sonar Analysis to Slack
         env:
           SONARQUBE_URL: ${{ secrets.SONARQUBE_URL }}
-          SONARQUBE_TOKEN: ${{ secrets.SONARQUBE_TOKEN }}
+          SONARQUBE_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONARQUBE_PROJECT_KEY: ${{ secrets.SONARQUBE_PROJECT_KEY }}
           SLACK_TOKEN: ${{ secrets.SLACK_TOKEN }}
           SLACK_CHANNEL: ${{ secrets.SLACK_CHANNEL }}
