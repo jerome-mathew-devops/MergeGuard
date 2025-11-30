@@ -15,8 +15,12 @@ jobs:
       - name: SonarQube Setup
         uses: sonarsource/sonarqube-scan-action@v6
         env:
+          SONAR_HOST_URL: ${{ secrets.SONARQUBE_URL }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          projectBaseDir: .
 
+          
       - name: Run SonarQube Analysis
         run: |
           sonar-scanner \
