@@ -3,14 +3,14 @@ import os
 import sys
 
 SONARQUBE_URL = os.getenv("SONARQUBE_URL", "localhost:9000")
-SONAR_TOKEN = os.getenv("SONAR_PROJECT_TOKEN")
-SONAR_PROJECT_KEY = os.getenv("SONAR_PROJECT_KEY")
+SONARQUBE_TOKEN = os.getenv("SONARQUBE_PROJECT_TOKEN")
+SONARQUBE_PROJECT_KEY = os.getenv("SONARQUBE_PROJECT_KEY")
 SLACK_TOKEN = os.getenv("SLACK_TOKEN")
 SLACK_CHANNEL = os.getenv("SLACK_CHANNEL")
 
 def sonarqube_project_status():
-    url = f"{SONARQUBE_URL}/api/qualitygates/project_status?projectKey={SONAR_PROJECT_KEY}"
-    response = requests.get(url, auth=(SONAR_TOKEN))
+    url = f"{SONARQUBE_URL}/api/quality_gates/project_status?projectKey={SONARQUBE_PROJECT_KEY}"
+    response = requests.get(url, auth=(SONARQUBE_TOKEN))
     response.raise_for_status()
     return response.json()
 
@@ -41,12 +41,14 @@ if __name__ == "__main__":
     details_message = "\n".join(details)
 
     message = (
-        f" SonarQube Report for *{SONAR_PROJECT_KEY}*\n"
+        f" SonarQube Report for *{SONARQUBE_PROJECT_KEY}*\n"
         f"Quality Gate: {'PASSED' if project_status == 'OK' else 'FAILED'} Proceeding to Merge PR\n\n"
         f"{details_message}\n\n"
-        f"🔗 Dashboard: {SONARQUBE_URL}/dashboard?id={SONAR_PROJECT_KEY}"
+        f"🔗 Dashboard: {SONARQUBE_URL}/dashboard?id={SONARQUBE_PROJECT_KEY}"
     )
 
     result = send_to_slack(message)
     print("Slack message has been sent", result)
 
+if project_status != "OK":
+    sys.exit(1)
