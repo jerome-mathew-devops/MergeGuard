@@ -13,21 +13,12 @@ jobs:
         uses: actions/checkout@v5
 
       - name: SonarQube Setup
-        uses: sonarsource/sonarqube-scan-action@v6
+        uses: SonarSource/sonarqube-scan-action@v6
         env:
-          SONAR_HOST_URL: ${{ secrets.SONARQUBE_URL }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          projectBaseDir: .
-
+          SONAR_HOST_URL: ${{ secrets.SONARQUBE_URL }}
           
-      - name: Run SonarQube Analysis
-        run: |
-          sonar-scanner \
-            -Dsonar.projectKey=${{ secrets.SONARQUBE_PROJECT_KEY }} \
-            -Dsonar.sources=src \
-            -Dsonar.host.url=${{ secrets.SONARQUBE_URL }} \
-            -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+
 
       - name: Send Sonar Analysis to Slack
         env:
