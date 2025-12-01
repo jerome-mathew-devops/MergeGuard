@@ -18,8 +18,6 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
           SONAR_HOST_URL: ${{ secrets.SONARQUBE_URL }}
           
-
-
       - name: Send Sonar Analysis to Slack
         env:
           SONARQUBE_URL: ${{ secrets.SONARQUBE_URL }}
