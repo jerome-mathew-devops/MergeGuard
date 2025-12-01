@@ -14,13 +14,11 @@ jobs:
 
       - name: SonarQube Setup
         uses: SonarSource/sonarqube-scan-action@v6
-       
-      - name: Run Sonar Scanner
-        run: sonar-scanner \
-            -Dsonar.projectKey=mergeguard \
-            -Dsonar.sources=src \
-            -Dsonar.host.url=${{ secrets.SONARQUBE_URL }} \
-            -Dsonar.login=${{ secrets.SONARQUBE_TOKEN }}
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_HOST_URL: ${{ secrets.SONARQUBE_URL }}
+          
+
 
       - name: Send Sonar Analysis to Slack
         env:
